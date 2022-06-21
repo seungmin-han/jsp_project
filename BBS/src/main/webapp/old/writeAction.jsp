@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="post.PostDAO" %>
+<%--@ page import="post.PostDAO" --%>
 <%@ page import="java.io.PrintWriter" %>
 <% request.setCharacterEncoding("UTF-8"); %>
-<jsp:useBean id="post" class="post.Post" scope="page"/>
+<%-- jsp:useBean id="post" class="post.Post" scope="page"/>
 <jsp:setProperty name="post" property="postTitle"/>
 <jsp:setProperty name="post" property="userId"/>
 <jsp:setProperty name="post" property="postContent"/>
@@ -47,3 +47,5 @@
 	
 </body>
 </html>
+
+--%>

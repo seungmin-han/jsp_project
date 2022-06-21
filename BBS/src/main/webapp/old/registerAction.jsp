@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="user.UserDAO" %>
+<%--@ page import="user.UserDAO" --%>
 <%@ page import="java.io.PrintWriter" %>
 <%
 request.setCharacterEncoding("UTF-8");
 %>
-<jsp:useBean id="user" class="user.User" scope="page"/>
+<%-- jsp:useBean id="user" class="user.User" scope="page"/> 
 <jsp:setProperty name="user" property="userId"/>
 <jsp:setProperty name="user" property="userPasswd"/>
 <jsp:setProperty name="user" property="userName"/>
@@ -46,6 +46,6 @@ request.setCharacterEncoding("UTF-8");
 		script.println("</script>");
 			}
 	%>
-	
+	--%>
 </body>
 </html>

@@ -1,12 +1,15 @@
 /**
  * 
  */
-let isCreate = false;
+let isCreate = false;					//옵션이 만들어졌는지 확인하는 flag 변수
 let ssd;								// 시/도 select박스
 let ssgg;								// 시/군/구 select박스
 let map;								 //지도 
 let sido;								//시/도 option
 
+/**
+ * 문서가 준비되면 실행.
+ */
 window.onload = function() {	
 	if(isCreate) {
 		ssd.addEventListener('change', (event) => {
@@ -15,7 +18,7 @@ window.onload = function() {
 			let selected = document.querySelector("."+ssd.options[ssd.selectedIndex].value);
 	
 			if(selected.getAttribute("class")=="세종특별자치시") {
-				selected.setAttribute("fill","#FF0000");
+				selected.setAttribute("fill",fillArray[fillLevel]);
 				selected.classList.add("filled");
 				ssgg.style.display= "none";
 				return;
@@ -28,25 +31,13 @@ window.onload = function() {
 	
 		ssgg.addEventListener('change', (event) => {
 			fill();
-		}
-		// (event) => {
-		// 	removeFilled();
-		// 	let sidoSelectedValue = ssd.options[ssd.selectedIndex].value;
-		// 	let sigunguSelectedValue = ssgg.options[ssgg.selectedIndex].value;
-		// 	let sdSelected = document.querySelector("."+sidoSelectedValue);
-		// 	let sggSelected = sdSelected.querySelector("."+sigunguSelectedValue);
-		// 	if(sggSelected.tagName == "g") {
-		// 		sggSelected = sggSelected.childNodes[1];
-		// 		console.log(sggSelected);
-		// 	}
-		// 	sggSelected.setAttribute("fill","#FF0000");
-		// 	sggSelected.classList.add("filled");
-	
-		// }
-		);	
+		});	
 	}
 };
 
+/**
+ * 색칠된 지역을 지우는 함수
+ */
 function removeFilled() {
 	let filled = document.querySelector(".filled");
 	if(filled != null) {
@@ -54,7 +45,10 @@ function removeFilled() {
 		filled.classList.remove("filled");
 	}
 }
-	
+
+/**
+ * 시/도 SELECT 박스의 옵션을 추가하는 함수
+ */
 function createSidoOption(){
 	ssd = document.querySelector("#ifptSido"); 
 	ssgg = document.querySelector("#ifptSigungu"); 
@@ -73,6 +67,10 @@ function createSidoOption(){
 	isCreate = true;
 }
 
+/**
+ * 시/군/구 SELECT 박스의 옵션을 추가하는 함수
+ * @param {object} sgg 
+ */
 function createSigunguOption(sgg) {
 	sgg.forEach(function(tempSgg) {	
 		let option = document.createElement("option");
@@ -82,13 +80,22 @@ function createSigunguOption(sgg) {
 	});
 }
 
-function fill(sido="",sigungu="",flag=0) {
+/**
+ * SELECT 박스에서 선택한 지역의 지도를 색칠하는 함수
+ * @param {string} sido 	// 색칠하고자 하는 시/도 지역
+ * @param {string} sigungu 	//색칠하고자 하는 시/군/구 지역
+ * @param {int} flag 		//1: updateForm | 0: insertForm, postView | other : bypass
+ * @param {int}removeFill 	//1: true | 0: false
+ */
+function fill(sido="",sigungu="",flag=0, removeFill=1, count=1) {
 	let sidoSelectedValue;
 	let sigunguSelectedValue;
 	let sdSelected;
 	let sggSelected;
+	let fillArray = ['#00FF00','#FFFF00','#FFBB00','#FF0000'];
+	let fillLevel = (count>fillArray.length)?3:count - 1;
 	
-	removeFilled();
+	if(removeFill==1)removeFilled();
 
 	if(sido != "") {
 		sidoSelectedValue = sido;
@@ -124,7 +131,7 @@ function fill(sido="",sigungu="",flag=0) {
 	} else {
 		//by pass
 	}
-	sggSelected.setAttribute("fill","#FF0000");
+	sggSelected.setAttribute("fill",fillArray[fillLevel]);
 	sggSelected.classList.add("filled");
 }
 

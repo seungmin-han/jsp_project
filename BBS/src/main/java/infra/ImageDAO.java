@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.json.simple.*;
+
 public class ImageDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
@@ -42,5 +44,46 @@ public class ImageDAO {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+	
+	public String getImageList(int iftmSeq) {
+		String result = null;
+		String SQL = "SELECT ifimName, ifimPath, ifptSeq FROM infrImage WHERE iftmSeq = ? AND ifimDelNy is null ORDER BY ifimRegDatetime DESC limit 8 ";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, iftmSeq);
+			rs = pstmt.executeQuery();
+			JSONArray jArr = new JSONArray();
+			while(rs.next()) {
+				JSONObject jObj = new JSONObject();
+				jObj.put("ifimName", rs.getString(1));
+				jObj.put("ifimPath", rs.getString(2));
+				jObj.put("ifptSeq", rs.getInt(3));
+				jArr.add(jObj);
+			}
+			result = jArr.toJSONString();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int deleteByUpdate(Image image ,int ifptSeq, String ifmbId) {
+		int result = -1;
+		String SQL = "UPDATE infrImage SET ifimModIp = ?, ifimModSeq = (select ifmbSeq from infrMember where ifmbId = ?), ifimModDeviceCd = ?, ifimModDatetime = NOW(6), ifimDelNy = 1 WHERE ifptSeq = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, image.getIfimModIp());
+			pstmt.setString(2, ifmbId);
+			pstmt.setInt(3, image.getIfimRegDeviceCd());
+			pstmt.setInt(4, ifptSeq);
+			
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

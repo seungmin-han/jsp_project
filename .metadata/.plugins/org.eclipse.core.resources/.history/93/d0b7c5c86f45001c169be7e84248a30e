@@ -1,0 +1,43 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+<script src="./script/map.js"></script>  
+<script src="./script/script.js"></script>
+</head>
+<body>
+	<jsp:include page="header.jsp" flush="false"></jsp:include>
+	<jsp:include page="map.jsp"></jsp:include>
+	<div id="postView"></div>
+	<script type="text/javascript">
+		let postDatas = JSON.parse(getList(0));
+		let regionDatas = JSON.parse(getRegionList(0));
+	
+		window.onload = function() {
+			for(idx in regionDatas) {
+				fill(regionDatas[idx]['ifrgSido'], regionDatas[idx]['ifrgSigungu'],0,0);
+			}
+			
+			$("tr").on("click", function() {
+				location.href="./postView.jsp?ifptSeq="+$(this).children().eq(0).text();
+			});
+		}
+		
+		for(idx in postDatas) {
+			let data = postDatas[idx];
+			let imgPath = data['ifimPath']+data['ifimName'];
+			let title = data['ifptTitle'];
+			$("#postView").append("<div class='postCard'><img src='"+imgPath+"'><p>"+title+"</p></div>");
+		}
+		
+	</script>
+</body>
+</html>

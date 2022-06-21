@@ -1,12 +1,13 @@
 package common;
 
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.RandomStringUtils;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -58,11 +59,16 @@ public class Common {
     	return today;
     }
     
-    public static void moveTo(String url, HttpServletResponse response) {			//url을 받아 이동
+    public static void moveTo(String url, int replace, HttpServletResponse response) {			//url을 받아 이동
     	PrintWriter printWriter = null;
     	try {
-			printWriter = response.getWriter();
-			printWriter.print("<script>location.href='"+url+"'</script>");
+    		printWriter = response.getWriter();
+    		if(replace == 1) {
+    			printWriter.print("<script>location.replace('"+url+"')</script>");
+    		} else {
+    			printWriter.print("<script>location.href='"+url+"'</script>");
+    		}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,4 +97,41 @@ public class Common {
 		}
     }
     
+    public static String calcDate(String date)										// 입력한 날짜와 오늘 날짜를 비교하여 일 수를 계산
+    {
+    	String currentDate = Common.getToday();
+        String inputDate = date;
+     
+        try{ 
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            
+            Date firstDate = format.parse(currentDate);
+            Date secondDate = format.parse(inputDate);
+            
+            
+            long calDate = secondDate.getTime() - firstDate.getTime();
+            
+            long calDateDays = calDate / (24*60*60*1000);
+     
+            calDateDays = Math.abs(calDateDays);
+            
+            return Long.toString(calDateDays+1);
+            }
+            catch(ParseException e)
+            {
+                // 예외 처리
+            }
+        return null;
+    }    
+
+
+    //    출처: https://highcode.tistory.com/5 [HighCode]
+    
+    public static String createCode(int iftmSeq) {
+    	int length = 16 - (int)(Math.log10(iftmSeq)+1);
+    	String code = RandomStringUtils.randomAlphanumeric(length)+iftmSeq;
+    	return code;
+    }
+    
+    // 참고: https://hahaha2016.tistory.com/3
 }

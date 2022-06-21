@@ -1,3 +1,4 @@
+<%@page import="common.Common"%>
 <%@ page import="infra.TeamDAO" %>
 <%@ page import="infra.PostDAO" %>
 <%@ page import="java.util.*" %>
@@ -17,15 +18,17 @@
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script> 
 <link rel="stylesheet" type="text/css" href="./externalLib/jqgrid/css/ui.jqgrid.css" /> 
 <script src="./externalLib/jqgrid/js/i18n/grid.locale-kr.js" type="text/javascript"></script> 
-<script src="./externalLib/jqgrid/js/minified/jquery.jqGrid.min.js" type="text/javascript"></script>  
+<script src="./externalLib/jqgrid/js/minified/jquery.jqGrid.min.js" type="text/javascript"></script>
+<script src="./script/map.js"></script>  
 <script src="./script/script.js"></script>
+<link rel="stylesheet" href="./style/style.css">
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	
+	<div class="wrap teamWrap">
 	<%
 		if(session.getAttribute("ifmbId") == null) {
-			out.print("<script>alert('로그인 후 이용 가능합니다.'); history.back(); </script>");
+			out.print("<script>alert('로그인 후 이용 가능합니다.'); location.replace('index.jsp'); </script>");
 			return;
 		} 
 	
@@ -52,22 +55,69 @@
 			out.print("<script>alert('팀 정보를 불러오지 못했습니다.'); history.back(); </script>");
 			return;
 		}
-	%>
 	
-	<p><%=team.getIftmAnniversary() %></p>
-	<p><%=team.getIftmStartDay() %></p>
-	<a href="teamSetting.jsp">팀 설정</a>
+		if(Integer.parseInt(String.valueOf(session.getAttribute("iftmAdminNy")))==1) {
+	%>
+	<a href="teamSetting.jsp" style="float:right;">팀 설정</a>
+	<% } else { %>
+	<a href="execute.jsp?process=leaveTeam" style="float:right;">팀 탈퇴</a>
+	<% } %>
+	<div id="imageBox">
+		<div class="teamInfo">
+			<p class="an"><%=team.getIftmAnniversary() %></p>
+			<p class="startDay">D+<%=Common.calcDate(team.getIftmStartDay()) %></p>
+		</div>
+	</div>
+	<jsp:include page="map.jsp"></jsp:include>
+	
 	<table id="t" border=1 align="center" width=100% style="border-collapse : collapse;"></table>
 	<div id="gridPager"></div>
-	<a href="postForm.jsp">글쓰기</a>
+	<button onclick="location.href='postForm.jsp'" style="float:right; margin-right:100px; padding:5px 30px">글쓰기</button>
+	<br><br>
+	</div>
+	<jsp:include page="footer.jsp"></jsp:include>
 	<script>
-		let datas = JSON.parse(getList(<%=iftmSeq%>));
-		console.log(datas);	
+		let postDatas = JSON.parse(getList(<%=iftmSeq%>));
+		let imageDatas = JSON.parse(getImageList(<%=iftmSeq%>));
+		let regionDatas = JSON.parse(getRegionList(<%=iftmSeq%>));
+
+		
+		
+		if(imageDatas) {
+			let imgBox = document.querySelector("#imageBox");
+			let br = document.createElement("br");
+			for(idx in imageDatas) {
+				if(idx == 4) imgBox.appendChild(br);
+				let image = document.createElement("img");
+				image.setAttribute("src", (imageDatas[idx]['ifimPath']+imageDatas[idx]['ifimName']));
+				image.setAttribute("width", 135);
+				image.setAttribute("height", 135);
+				image.setAttribute("data-ifptSeq", imageDatas[idx]['ifptSeq']);
+				image.style.border = "1px solid #000";
+				imgBox.appendChild(image);
+			} 			
+		}
+		
+		window.onload = function() {
+			for(idx in regionDatas) {
+				fill(regionDatas[idx]['ifrgSido'], regionDatas[idx]['ifrgSigungu'],0,0);
+			}
+			
+			$("tr").on("click", function() {
+				console.log(1);
+				location.href="./postView.jsp?ifptSeq="+$(this).children().eq(0).text();
+			});
+			
+			$("img").on("click", function() {
+				location.href = "./postView.jsp?ifptSeq="+$(this).data("ifptseq");
+			});
+		}
+		
+		
 		
 		$("#t").jqGrid({
 			datatype: "local",
-			data: datas,
-			height: 500,
+			data: postDatas,
 			width: 1000,
 			colNames: ['번호','시/도','제목','작성자','조회','작성일'],
 			colModel:[ 

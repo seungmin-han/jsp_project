@@ -1,13 +1,6 @@
+<div id="mapWrap">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
@@ -1031,74 +1024,4 @@
 	l0.5,2.125h1.625l-0.5,3.875l-2.75,1.875l1.25,3l2,2.375v4l3.375,1.375l4.306,1.809l1.736,2.055l-0.917,5.168l0.917,2l-2.091,1.171
 	l0.517,4.106l-1.718,4.191l-3.75,3.875l-3.875,0.125L191.876,343.855z"/>
 </svg>
-<!--select name="ifrgSido" id="sido">
-	<option value="">시/도를 선택하세요.</option>
-</select>
-<select name="ifrgSigungu" id="sigungu">
-<option value="">시/군/구를 선택하세요</option>
-</select>
-
-<script>
-	let ssd = document.querySelector("#sido"); //select 박스
-	let ssgg = document.querySelector("#sigungu"); //select 박스
-	let map = document.querySelector("svg"); //지도 
-	let sido = Array.from(map.children);	//시/도 객체들
-	console.log(sido);
-	sido.forEach(function(sd) {	
-		//console.log(sd);
-		if(sd.getAttribute("class")=="레이어_19") return;
-		let option = document.createElement("option");
-		option.setAttribute("value",sd.getAttribute("class"));
-		option.innerText= sd.getAttribute("class");
-		ssd.appendChild(option);
-	});
-	
-	ssd.addEventListener('change', (event) => {
-		removeFilled();
-		ssgg.innerHTML = "<option value=\"\">시/군/구를 선택하세요</option>";
-		let selected = document.querySelector("."+ssd.options[ssd.selectedIndex].value);
-		
-		if(selected.getAttribute("class")=="세종특별자치시") {
-			selected.setAttribute("fill","#FF0000");
-			selected.classList.add("filled");
-			ssgg.style.display= "none";
-			return;
-		} else {
-			ssgg.style.display= "inline";
-		}
-		let sigungu = Array.from(selected.children);
-		sigungu.forEach(function(sgg) {	
-			console.log(sgg);
-			let option = document.createElement("option");
-			option.setAttribute("value",sgg.getAttribute("class"));
-			option.innerText= sgg.getAttribute("class");
-			ssgg.appendChild(option);
-		});
-	});
-	
-	ssgg.addEventListener('change', (event) => {
-		removeFilled();
-		let sidoSelectedValue = ssd.options[ssd.selectedIndex].value;
-		let sigunguSelectedValue = ssgg.options[ssgg.selectedIndex].value;
-		let sdSelected = document.querySelector("."+sidoSelectedValue);
-		let sggSelected = sdSelected.querySelector("."+sigunguSelectedValue);
-		if(sggSelected.tagName == "g") {
-			sggSelected = sggSelected.childNodes[1];
-			console.log(sggSelected);
-		}
-		sggSelected.setAttribute("fill","#FF0000");
-		sggSelected.classList.add("filled");
-		
-	});
-	
-	function removeFilled() {
-		let filled = document.querySelector(".filled");
-		if(filled != null) {
-			filled.setAttribute("fill", "#B9B9B9");	
-			filled.classList.remove("filled");
-		}
-	}
-	
-</script-->
-</body>
-</html>
+</div>

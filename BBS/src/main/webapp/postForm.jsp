@@ -25,28 +25,41 @@
 		}	
 			
 	%>
-	<form action='execute.jsp?process=post' method='post' >
-		<jsp:include page="map.jsp"></jsp:include>
-		작성자: <input type="text" name="ifptWirter" readOnly value='<%=session.getAttribute("ifmbId")%>'><br>
-		제목: <input type="text" name="ifptTitle" ><br> 
-		지역 설정: 
-		<select id="ifptSido" name="ifrgSido">
-			<option value="">시/도</option>
-		</select>
-		<select id="ifptSigungu" name="ifrgSigungu">
-			<option value="">시/군/구</option>
-		</select>
-		<select name="ifrgEupmyeondong">
-			<option value="">읍/면/동</option>
-		</select>
-		<br>
-		공개여부: <br>
-		<input type="radio" name="ifptPublicNy" value="1" selected>공개
-		<input type="radio" name="ifptPublicNy" value="0">비공개
-		<br>
-		<textarea name="ifptContent" id="ifptContent" rows="10" cols="100" ></textarea>
-		<input type="submit" value="글작성">
-	</form>
+	<div class="wrap postWrap">
+		<form action='execute.jsp?process=post' method='post' >
+			<div class="postTextWrap">
+				<div class="formBox">
+					<label>작성자</label><input type="text" name="ifptWirter" readOnly value='<%=session.getAttribute("ifmbId")%>'>
+				</div>
+				<div class="formBox">
+					<label>제목</label><input type="text" name="ifptTitle" >
+				</div>
+				<div class="formBox"> 
+					<label>지역 설정</label> 
+					<select id="ifptSido" name="ifrgSido">
+						<option value="">시/도</option>
+					</select>
+					<select id="ifptSigungu" name="ifrgSigungu">
+						<option value="">시/군/구</option>
+					</select>
+				</div>
+				<div class="formBox radioBox">
+					<label>공개여부</label>
+					공개 <input type="radio" name="ifptPublicNy" value="1" checked>
+					비공개 <input type="radio" name="ifptPublicNy" value="0">
+				</div>
+			</div>
+			<jsp:include page="map.jsp"></jsp:include><br><br><br>
+			<textarea name="ifptContent" id="ifptContent" rows="10" cols="100" ></textarea>
+			<div class="btnBox">
+				<button type="submit">글작성</button>
+				<button type="button" onclick="history.go(-1)">돌아가기</button>
+				<div class="clear"></div>
+			</div>
+			
+		</form>
+		<br><br><br>
+	</div>
 	
 	<script>
 		createSidoOption();
@@ -55,7 +68,7 @@
             'ifptContent'
             ,{ 
                 width : "100%"
-                ,height : "auto"
+                ,height : "500px"
                 ,enterMode : 2
                 , extraPlugins: 'image2,uploadimage'
                 , filebrowserImageUploadUrl: 'execute.jsp?process=upload'
@@ -69,8 +82,11 @@
 		if(process == "update") {
 			let form = document.querySelector("form");
 			post = JSON.parse(getOne(<%=request.getParameter("ifptSeq")%>));
-			form.setAttribute("action","execute.jsp?process=upadte&ifptSeq="+post['ifptSeq']);
+			let publicNy = post['ifptPublicNy'];
+			form.setAttribute("action","execute.jsp?process=update&ifptSeq="+post['ifptSeq']);
+			$("input[name='ifptTitle']").val(post['ifptTitle']);
 			CKEDITOR.instances.ifptContent.setData(post['ifptContent']);
+			$("input[value="+publicNy+"]").prop("checked", true);
 			fill(post['ifrgSido'],post['ifrgSigungu'],1);
 			
 		}

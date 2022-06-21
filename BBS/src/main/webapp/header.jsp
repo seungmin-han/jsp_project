@@ -7,10 +7,10 @@
 			<li><a href="index.jsp">메인</a></li>
 			<li><a href="team.jsp">팀</a></li>
 			<li>
-				<a href="comunity.jsp">커뮤니티</a>
-				<ul>
-					<li><a href="bbs.jsp?c=notice">공지사항</a></li>
-					<li><a href="bbs.jsp?c=all">게시글 모아보기</a></li>
+				<a href="community.jsp">커뮤니티</a>
+				<ul id="communityMenu">
+					<li><a href="community.jsp?c=notice">공지사항</a></li>
+					<li><a href="community.jsp">게시판</a></li>
 				</ul>
 			</li>
 			<div id="loginBox">

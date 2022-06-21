@@ -1,6 +1,74 @@
 @charset "UTF-8";
 
+* {
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+    text-decoration: none;
+}
 
+/* header */
+
+header {
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    background-color: lightslategray;
+}
+
+header a {
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+header nav {
+    width: 1200px;
+}
+
+nav > ul {
+    width: 100%;
+}
+
+nav > ul > * {
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 20px;
+}
+
+nav ul > li:nth-child(4) {
+    position: relative;
+}
+
+nav ul > li:nth-child(4):hover #communityMenu {
+    display: block;
+} 
+
+#communityMenu {
+    background-color: #a1b1c2;
+    display: none;
+    position: absolute;
+    padding:0 20px;
+    top: 70px;
+    left: 0;
+    z-index:9;
+}
+
+#communityMenu > *{
+    border-bottom: 1px solid lightslategray;
+    text-align: center;
+}
+
+#loginBox {
+    float: right;
+}
+
+#loginBox > a {
+    padding: 0 7px;
+}
+
+/* common */
 figure {
     text-align: center;
     outline: solid 1px #ccc;
@@ -9,3 +77,355 @@ figure {
     margin: 10px 20px;
     display: inline-block;
 }
+
+.wrap {
+    width:1200px;
+    padding-top: 50px;
+    min-height:760px;
+}
+
+/* post */
+.postView {
+    width: 100%;
+
+}
+
+.postCard {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    width: 18%;
+    height: 200px;
+    padding: 20px 10px;
+    margin: 5px 5px;
+    border: 1px solid #000;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.postCard:hover {
+    transform: scale(1.05);
+    box-shadow: 1px 1px 5px;
+}
+
+.postCard p {
+    padding:7px 0;
+    text-align: center;
+}
+
+.cardWriter {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.cardTitle {
+    font-size: 14px;
+    white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+    
+}
+
+.postImgWrap {
+    width: 150px;
+    height: 100px;
+    overflow: hidden;
+}
+
+.postWrap #mapWrap {
+	transform: scale(1);
+	display:inline-block;
+}
+
+.postTextWrap {
+	width:60%;
+	display:inline-block;
+	vertical-align: bottom;
+}
+.postTextWrap .formBox  {
+	margin-bottom: 30px;
+}
+
+.postTextWrap .formBox label {
+	width:100px;
+	display:inline-block;
+	font-size:20px;
+	padding-right: 10px;
+	
+}
+
+.postTextWrap .formBox input[type=text] {
+	width: 500px;
+	padding:7px;
+}
+
+.postTextWrap .formBox select {
+	width: 245px;
+	padding: 7px;
+}
+
+.postTextWrap .radioBox input {
+	margin-right: 40px;
+}
+
+/* community */
+
+#communityWrap  {
+    width: 100%;
+    position: relative;
+}
+
+#communityTable {
+    padding-top: 25px;
+	width:100%;
+	text-align: center;	
+}
+
+#communityTable th {
+	background-color: lightslategray;
+	padding: 5px 10px;
+	color: #fff;
+}
+
+#communityTable td {
+	background-color: #fafafa;
+	padding: 5px 10px;
+	font-weight:bold;
+}
+
+#communityTable tbody tr {
+    cursor: pointer;
+}
+
+#pager {
+    position: absolute;
+    top: 450px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20%;
+    text-align: center;
+    margin-top: 50px;
+    padding: 10px 20px;
+    border: 1px solid #000;
+}
+
+#pager li {
+    display: inline-block;
+    padding: 5px 10px;
+    cursor:pointer;
+}
+
+/* team */
+
+#mapWrap {
+    max-width: 49%;
+    display: inline-block;
+    padding:20px;
+    border:1px solid #000;
+}
+
+#imageBox {
+    width: 49%;
+    display: inline-block;
+}
+
+.teamWrap #imageBox, #mapWrap {
+	display: inline-block;
+	vertical-align: top;
+}
+/* main */
+
+#mainWrap {
+	width:100%;
+}
+
+#mainWrap > #recommendWrap {
+	width:40%;
+	float: left;
+}
+
+#mainWrap > #mapWrap{
+	float: right;
+}
+
+.clear {
+	clear:both;
+}
+
+.recommendContent {
+	width:100%;
+	padding:10px;
+	border:1px solid #000;
+	margin:10px 0;
+	transition: 0.3s;
+}
+
+.recommendContent:hover {
+	cursor: pointer;
+	transform:scale(1.05);
+}
+
+.recommendContent .recommendImgWrap {
+	line-height:150px;
+	display: inline-block;
+	width: 150px;
+	height:150px;
+	overflow:hidden;
+	border: 1px solid #000;
+}
+
+.recommendImgWrap img {
+	vertical-align:middle;
+}
+
+.recommendContent .recommendTextWrap {
+	display: inline-block;
+	padding-left:20px;
+	vertical-align:top;
+	width: calc(100% - 200px);
+}
+
+.recommendTextWrap > * {
+	margin: 15px 0;
+	width:100%;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+} 
+
+
+.loginWrap {
+	margin-top: 100px;
+}
+
+.loginWrap .formBox {
+	width:300px;
+	margin-top:20px;
+}
+
+.loginWrap .formBox input[type=text],input[type=password] {
+	height:25px;
+}
+
+.loginWrap .formBox input[type=submit] {
+	padding: 5px 30px;
+}
+
+
+
+ #imageBox {
+ 	margin-top:150px;
+ }
+ 
+ .fWrap {
+ 	width:350px;
+ }
+ .fWrap h2 {
+ 	text-align: center;
+ 	padding-bottom: 30px;
+ }
+ 
+ .fWrap .formBox {
+ 	width:100%;
+ 	padding-bottom: 20px;
+ }
+ 
+ .fWrap .formBox label {
+ 
+ 	float:left;
+ }
+ 
+ .fWrap label {
+ 	font-size: 14px;
+ 	font-weight:bold;
+ 	
+ }
+ 
+ .fWrap .radioBox label {
+ 	display:inline-block;
+ 	
+ }
+ .fWrap .radioBox div {
+
+ 	float:right;
+ 	
+ }
+ 
+ 
+ .fWrap .formBox input {
+ 	float:right;
+ }
+ 
+ .fWrap .radioBox {
+ 	padding-bottom: 20px;
+ }
+ 
+ .fWrap input[type=submit] {
+ 	margin-top:40px;
+ 	display:block;
+ 	padding:5px 30px;
+ }
+ 
+ .btnBox button {
+ 	margin-top: 40px;
+ 	margin-left:20px;
+ 	padding: 5px 30px;
+ 	float:right;
+ 	font-weight:bold;
+ }
+ 
+ .joinTeamWrap input[type=text] {
+ 	display:block;
+ 	padding: 5px 30px;
+ }
+ 
+ #imageBox{
+ 	margin:0 50px;
+ }
+ 
+ #imageBox img {
+ 	margin:20px 5px 40px 5px;
+ 	
+ }
+ 
+ .an {
+ 	width:100%;
+ 	margin:0;
+ 	font-weight:bold;
+ 	font-size:24px;
+ }
+ 
+ .startDay {
+ 	margin-top:15px;
+ 	font-size:20px;
+ }
+ 
+ .teamInfo {
+ 	margin:0 50px 30px 50px;
+ 	width:70%;
+ 	display:inline-block;
+ 	text-align:center;
+ 	border:3px solid lightslategray;
+ 	padding:20px;
+ }
+ 
+ footer {
+ 	position:relavtive;
+ 	width:100%;
+ 	background-color:#444;
+ 	color:#aaa;
+ 	text-align:center;
+ 	padding-bottom:30px;
+ }
+ 
+ footer .wrap {
+ 	min-height:1px;
+ }
+ 
+ footer ul {
+ 	width:60%;
+ 	border-bottom: 1px solid #aaa;
+ 	padding-bottom: 10px;
+ 	margin-bottom:10px;
+ }
+ 

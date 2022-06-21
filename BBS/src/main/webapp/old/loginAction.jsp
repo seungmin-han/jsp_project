@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="user.UserDAO" %>
+<%--@ page import="user.UserDAO" --%>
 <%@ page import="java.io.PrintWriter" %>
 <%
 request.setCharacterEncoding("UTF-8");
 %>
-<jsp:useBean id="user" class="user.User" scope="page"/>
+<%-- jsp:useBean id="user" class="user.User" scope="page"/> --%>
 <jsp:setProperty name="user" property="userId"/>
 <jsp:setProperty name="user" property="userPasswd"/>
 <!DOCTYPE html>
@@ -15,7 +15,7 @@ request.setCharacterEncoding("UTF-8");
 <meta name="viewport" content="width=device-width", initial-scale="1">
 </head>
 <body>
-	<%
+	<%--
 	String userId = null;
 			
 		if(session.getAttribute("userId") != null) {
@@ -30,8 +30,8 @@ request.setCharacterEncoding("UTF-8");
 			script.println("</script>");
 		}
 			
-		UserDAO userDAO = new UserDAO(); 
-		int result = userDAO.login(user.getUserId(),user.getUserPasswd());
+		//UserDAO userDAO = new UserDAO(); 
+		//int result = userDAO.login(user.getUserId(),user.getUserPasswd());
 		PrintWriter script = response.getWriter();
 		
 		if(result == 1) {
@@ -55,7 +55,7 @@ request.setCharacterEncoding("UTF-8");
 			script.println("history.back()");
 			script.println("</script>");
 		}
-	%>
+	--%>
 	
 </body>
 </html>

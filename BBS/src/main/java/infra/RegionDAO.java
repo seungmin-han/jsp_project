@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class RegionDAO {
 	private Connection conn;
@@ -74,5 +78,69 @@ public class RegionDAO {
 			e.printStackTrace();
 		}
 		return -1; //DB¿¡·¯
+	}
+	
+	public String getRegionList(int iftmSeq) {
+		String result = null;
+		String SQL = "SELECT ifrgSido, ifrgSigungu, Count(*) FROM infrRegion WHERE 1=1 AND ifrgDelNy is null";
+		if(iftmSeq != 0) SQL += " AND iftmSeq = ?";
+		SQL += " AND ifrgSido IS NOT NULL GROUP BY ifrgSido, ifrgSigungu";
+		
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			if(iftmSeq != 0) pstmt.setInt(1, iftmSeq);
+			rs = pstmt.executeQuery();
+			JSONArray jArr = new JSONArray();
+			while(rs.next()) {
+				JSONObject jObj = new JSONObject();
+				jObj.put("ifrgSido", rs.getString(1));
+				jObj.put("ifrgSigungu", rs.getString(2));
+				jObj.put("count", rs.getInt(3));
+				jArr.add(jObj);
+			}
+			result = jArr.toJSONString();
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int update(Region region, int ifptSeq, String ifmbId) {
+		int result = -1;
+		String SQL = "UPDATE infrRegion SET ifrgSido = ?, ifrgSigungu = ?, ifrgModDeviceCd = ?, ifrgModIp = ?, ifrgModDatetime = NOW(6), ifrgModSeq = (select ifmbSeq from infrMember where ifmbId = ?) WHERE ifrgSeq = (select ifrgSeq from infrPost where ifptSeq = ?)";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, region.getIfrgSido());
+			pstmt.setString(2, region.getIfrgSigungu());
+			pstmt.setInt(3, region.getIfrgModDeviceCd());
+			pstmt.setString(4, region.getIfrgModIp());
+			pstmt.setString(5, ifmbId);
+			pstmt.setInt(6, ifptSeq);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int deleteByUpdate(Region region, int ifptSeq, String ifmbId) {
+		int result = -1;
+		String SQL = "UPDATE infrRegion SET ifrgDelNy = 1, ifrgModDeviceCd = ?, ifrgModIp = ?, ifrgModDatetime = NOW(6), ifrgModSeq = (select ifmbSeq from infrMember where ifmbId = ?) WHERE ifrgSeq = (select ifrgSeq from infrPost where ifptSeq = ?)";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, region.getIfrgModDeviceCd());
+			pstmt.setString(2, region.getIfrgModIp());
+			pstmt.setString(3, ifmbId);
+			pstmt.setInt(4, ifptSeq);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

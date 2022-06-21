@@ -4,6 +4,9 @@ public class Team {
 	private String iftmName;			//팀 이름
 	private String iftmAnniversary;		//팀에서 지정한 문구 또는 기념일
 	private String iftmStartDay;		//팀에서 지정한 시작일자
+	
+	private String iftmInviteCd;		//팀을 가입하기 위한 코드
+	
 	private String iftmRegIp;			//가입 아이피
 	private String iftmRegDatetime;		//가입 날짜 (소수점 6자리까지 표시)
 	private String iftmModIp;			//데이터 수정 아이피
@@ -99,6 +102,13 @@ public class Team {
 	}
 	public void setIftmDelNy(int iftmDelNy) {
 		this.iftmDelNy = iftmDelNy;
+	}
+	
+	public String getIftmInviteCd() {
+		return iftmInviteCd;
+	}
+	public void setIftmInviteCd(String iftmInviteCd) {
+		this.iftmInviteCd = iftmInviteCd;
 	}
 	
 	
